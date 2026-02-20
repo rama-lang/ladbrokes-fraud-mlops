@@ -1,0 +1,18 @@
+# 1. బేస్ ఇమేజ్ (Python) ని ఎంచుకోవడం
+FROM python:3.9-slim
+
+# 2. వర్కింగ్ డైరెక్టరీని సెట్ చేయడం
+WORKDIR /app
+
+# 3. అవసరమైన ఫైల్స్‌ను కాపీ చేయడం
+COPY requirements.txt .
+COPY . /app
+
+# 4. లైబ్రరీలను ఇన్‌స్టాల్ చేయడం
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. పోర్ట్ 8000 ని ఓపెన్ చేయడం
+EXPOSE 8000
+
+# 6. అప్లికేషన్‌ను రన్ చేయడం
+CMD ["uvicorn", "src.deployment.app:app", "--host", "0.0.0.0", "--port", "8000"]
